@@ -4,7 +4,7 @@ import java.text.DateFormat;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import org.apache.cordova.DroidGap;
+import org.apache.cordova.api.CordovaPlugin;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
