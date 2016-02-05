@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="org.nypr.cordova.PavlovPlugin"
+    version="0.1.0">
+    <name>PavlovPlugin</name>
+    <description>Pavlov Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>sleep,wakeup,timer</keywords>
+    <repo>git@git.wnyc.net:mobile/cordova/cordova-plugin-wakeuptimer.git</repo>
+
+    <js-module src="www/wakeup.js" name="Wakeup">
+      <clobbers target="wakeuptimer"/>
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="PavlovPlugin" >
+                <param name="android-package" value="org.nypr.cordova.PavlovPlugin.PavlovPlugin"/>
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/*">
+          <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+          <uses-permission android:name="android.permission.WAKE_LOCK" />
+          <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+        </config-file>
+        
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <receiver android:name="org.nypr.cordova.PavlovPlugin.AlarmReceiver" />
+            <receiver android:name="org.nypr.cordova.PavlovPlugin.Bootalarm">  
+              <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+              </intent-filter>
+            </receiver>
+
+        <receiver android:name="Bootalarm" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        </config-file>
+        
+        <source-file src="src/android/AlarmReceiver.java" target-dir="src/org/nypr/cordova/PavlovPlugin/" />
+        <source-file src="src/android/Bootalarm.java" target-dir="src/org/nypr/cordova/PavlovPlugin/" />
+        <source-file src="src/android/MainActivity.java" target-dir="src/org/nypr/cordova/PavlovPlugin/" />
+    </platform>
+
+
+
+</plugin>
